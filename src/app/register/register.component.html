@@ -1,0 +1,64 @@
+<form [formGroup]="form" class="register-form">
+  <div>
+    <mat-form-field class="form-field">
+      <mat-label>Email</mat-label>
+      <input matInput appEmailvalidator #input name="email" formControlName="email">
+      <mat-error *ngIf="form.get('email')?.hasError('email')">
+        Your email is invalid
+      </mat-error>
+      <mat-error *ngIf="form.get('email')?.hasError('required')">
+        This field is required
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field class="form-field">
+      <mat-label>Password</mat-label>
+      <input matInput name="password" formControlName="password" type="password">
+      <mat-error *ngIf="form.get('password')?.hasError('required')">
+        This field is required
+      </mat-error>
+      <mat-error *ngIf="form.get('password')?.hasError('minlength')">
+        Your passwords should be at least {{ form.get('password')?.errors!['minlength']['requiredLength']}} characters long.
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field class="form-field">
+      <mat-label>Confirm password</mat-label>
+      <input matInput name="password2" formControlName="password2" type="password">
+      <mat-error *ngIf="form.get('password2')?.hasError('required')">
+        This field is required
+      </mat-error>
+      <mat-error *ngIf="form.get('password2')?.hasError('mismatch')">
+        Passwords does not match
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field class="form-field">
+      <mat-label>Your name</mat-label>
+      <input matInput name="name" formControlName="name">
+      <mat-error *ngIf="form.get('name')?.hasError('required')">
+        This field is required
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field class="form-field">
+      <mat-label>Your surname</mat-label>
+      <input matInput name="surname" formControlName="surname">
+      <mat-error *ngIf="form.get('surname')?.hasError('required')">
+        This field is required
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="form-buttons" matTooltip="{{form.valid ? '' : 'Fill the form above with valid data'}}">
+      <button mat-raised-button color="primary" [disabled]="form.invalid" (click)="register()">Register</button>
+  </div>
+</form>

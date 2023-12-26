@@ -1,0 +1,25 @@
+<div *ngIf="books$ | async as books">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Author</th>
+        <th scope="col">Category</th>
+        <th scope="col">Tag</th>
+        <th scope="col">Isbn</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let book of books">
+        <td>{{book.name}}</td>
+        <td>{{book.author}}</td>
+        <td>{{book.category}}</td>
+        <td>{{book.tag}}</td>
+        <td>{{book.isbn}}</td>
+        <td matTooltip="{{book.available ? '' : 'This book is not available'}}" [matTooltipPosition]="'after'">
+          <button mat-raised-button color="primary" [disabled]="!book.available">Borrow</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
