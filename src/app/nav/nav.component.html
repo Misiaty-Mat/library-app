@@ -6,8 +6,8 @@
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
       <a mat-list-item routerLink="">Books</a>
-      <a mat-list-item routerLink="login">Login</a>
-      <a mat-list-item routerLink="register">Register</a>
+      <a *ngIf="user === null" mat-list-item routerLink="login">Login</a>
+      <a *ngIf="user === null" mat-list-item routerLink="register">Register</a>
       <a mat-list-item routerLink="booking">Bookings</a>
     </mat-nav-list>
   </mat-sidenav>
@@ -22,6 +22,10 @@
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <span>Library App</span>
+      <div class="username-container">
+        <button class="logout-button" mat-raised-button *ngIf="user" (click)="logout()">Logout</button>
+        <span class="username">{{ username$ | async }}</span>
+      </div>
     </mat-toolbar>
     <div class="container">
       <router-outlet></router-outlet>

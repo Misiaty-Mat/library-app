@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Observable, catchError, map, shareReplay, throwError } from 'rxjs';
 import { LoginDetails } from '../models/loginDetails';
@@ -7,6 +7,7 @@ import { AppConfig } from '../apiConfig/appConfig.interface';
 import { ResToken } from '../models/resToken';
 import { Book } from '../models/book';
 import { RegisterDetails } from '../models/registerDetails';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -17,22 +18,29 @@ export class ApiService {
     private httpClient: HttpClient
   ) {}
 
-  headers = new HttpHeaders({
-    'Content-Type': 'application/json'
-  });
+  getHeaders(token?: string) {
+    const heders = new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+    return token ? heders.append('Authorization', `Bearer ${token}`) : heders
+  }
 
   login(loginDetails: LoginDetails): Observable<ResToken> {
-    return this.httpClient.post<ResToken>('https://localhost:8443/api/v1/auth/authenticate', JSON.stringify(loginDetails), {headers: this.headers})
+    return this.httpClient.post<ResToken>('https://localhost:8443/api/v1/auth/authenticate', JSON.stringify(loginDetails), {headers: this.getHeaders()})
     .pipe(
       catchError(this.processError)
     );
   }
 
   register(registerDetails: RegisterDetails): Observable<ResToken> {
-    return this.httpClient.post<ResToken>('https://localhost:8443/api/v1/auth/register', JSON.stringify(registerDetails), {headers: this.headers})
+    return this.httpClient.post<ResToken>('https://localhost:8443/api/v1/auth/register', JSON.stringify(registerDetails), {headers: this.getHeaders()})
     .pipe(
       catchError(this.processError)
     );
+  }
+
+  me(token: string): Observable<User> {
+    return this.httpClient.get<User>('https://localhost:8443/api/v1/user/me', {headers: this.getHeaders(token), withCredentials: true});
   }
 
   getBooks(): Observable<Book[]> {

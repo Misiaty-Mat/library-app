@@ -67,6 +67,7 @@
           "configurations": {
             "production": {
               "browserTarget": "library-app:build:production",
+              "proxyConfig": "src/proxy.conf.json"
             },
             "development": {
               "browserTarget": "library-app:build:development",
