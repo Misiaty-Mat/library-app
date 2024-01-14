@@ -1,4 +1,14 @@
-<div *ngIf="books$ | async as books">
+<mat-form-field *ngIf="categories$ | async as categories">
+  <mat-label>Select category</mat-label>
+  <mat-select [(value)]="selectedCategory" (valueChange)="filterBooks()">
+    <mat-option>All</mat-option>
+    <div *ngFor="let category of categories">
+      <mat-option [value]="'' + category">{{category}}</mat-option>
+    </div>
+  </mat-select>
+</mat-form-field>
+<p>Selected: {{selectedCategory}}</p>
+<div *ngIf="books">
   <table class="table table-striped">
     <thead>
       <tr>
@@ -16,8 +26,10 @@
         <td>{{book.category}}</td>
         <td>{{book.tag}}</td>
         <td>{{book.isbn}}</td>
-        <td matTooltip="{{book.available ? '' : 'This book is not available'}}" [matTooltipPosition]="'after'">
-          <button mat-raised-button color="primary" [disabled]="!book.available">Borrow</button>
+        <td matTooltip="{{isLoggedIn && book.available ? '' : 'Not available'}}" [matTooltipPosition]="'after'">
+          <button mat-raised-button color="primary" [disabled]="!book.available || !isLoggedIn" (click)="borrow(book)">
+            Borrow
+          </button>
         </td>
       </tr>
     </tbody>

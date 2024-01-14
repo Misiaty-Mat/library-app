@@ -6,9 +6,12 @@
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
       <a mat-list-item routerLink="">Books</a>
+      <a *ngIf="user && user.role !== 'CUSTOMER'" mat-list-item routerLink="add-book">Add book</a>
+      <a *ngIf="user" mat-list-item routerLink="loans/my">My loans</a>
+      <a *ngIf="user && user.role !== 'CUSTOMER'" mat-list-item routerLink="loans">All loans</a>
       <a *ngIf="user === null" mat-list-item routerLink="login">Login</a>
       <a *ngIf="user === null" mat-list-item routerLink="register">Register</a>
-      <a mat-list-item routerLink="booking">Bookings</a>
+      <a *ngIf="user !== null && user.role === 'ADMIN'" mat-list-item routerLink="users">Users</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -24,7 +27,7 @@
       <span>Library App</span>
       <div class="username-container">
         <button class="logout-button" mat-raised-button *ngIf="user" (click)="logout()">Logout</button>
-        <span class="username">{{ username$ | async }}</span>
+        <span class="username">{{ username }}</span>
       </div>
     </mat-toolbar>
     <div class="container">

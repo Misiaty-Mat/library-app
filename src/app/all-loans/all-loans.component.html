@@ -1,0 +1,28 @@
+<div *ngIf="loans$ | async as loans">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Book name</th>
+        <th scope="col">Book author</th>
+        <th scope="col">Book isbn</th>
+        <th scope="col">Return date</th>
+        <th scope="col">Lender name</th>
+        <th scope="col">Lender email</th>
+        <th scope="col">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let loan of loans">
+        <td>{{loan.book.name}}</td>
+        <td>{{loan.book.author}}</td>
+        <td>{{loan.book.isbn}}</td>
+        <td>
+          {{loan.return_date.toString().slice(0, loan.return_date.toString().indexOf('T'))}}
+        </td>
+        <td>{{loan.user.name + ' ' + loan.user.surname}}</td>
+        <td>{{loan.user.email}}</td>
+        <td>{{getStatus(loan)}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -60,7 +60,6 @@ export class RegisterComponent {
             name: formValues.name,
             surname: formValues.surname,
           });
-          console.log(e);
         },
       });
   }

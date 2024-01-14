@@ -45,21 +45,23 @@ export class AuthService {
   }
 
   logout() {
+    this.apiService.setToken('');
     localStorage.removeItem("Token");
     this.user = null;
   }
 
   private setSession(res: ResToken) {
     localStorage.setItem("Token", res.token);
-    return this.apiService.me(res.token).pipe(
-      catchError(this.logoutOnError)
+    this.apiService.setToken(res.token);
+    return this.apiService.me().pipe(
+      catchError(this.logoutOnError.bind(this))
     );
   }
 
   private logoutOnError(err: any): Observable<any> {
-    if (err.error instanceof HttpErrorResponse) {
-      this.logout()
-    }
+    this.apiService.setToken('');
+    localStorage.removeItem("Token");
+    this.user = null;
     return throwError(() => {});
   }
 }

@@ -35,7 +35,7 @@ export class LoginComponent {
     const formValues = this.form.value;
     this.loginService.login(formValues.email, formValues.password).subscribe({
       next: () => this.router.navigateByUrl('/'),
-      error: () => {
+      error: (err) => {
         this._snackBar.open(
           'We could not found user with this email and password.',
           'Ok'

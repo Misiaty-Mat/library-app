@@ -8,19 +8,20 @@ import {
 } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable, of } from 'rxjs';
-import { catchError, map, shareReplay } from 'rxjs/operators';
+import { catchError, filter, map, shareReplay } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 import { User } from '../models/user';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.scss'],
 })
-export class NavComponent implements DoCheck {
+export class NavComponent implements OnInit {
   private breakpointObserver = inject(BreakpointObserver);
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   user: User | null = null;
 
@@ -31,25 +32,30 @@ export class NavComponent implements DoCheck {
       shareReplay()
     );
 
-  username$ = of('')
+  username = ''
 
   logout() {
     this.authService.logout();
-    this.username$ = of('')
+    this.username = ''
     this.user = null
+    this.router.navigateByUrl('')
   }
 
-  ngDoCheck(): void {
-    this.username$ = this.authService.getUser().pipe(
-      map(user => {
+  ngOnInit(): void {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      this.authService.getUser().subscribe(
+        user => {
         if (user === null) {
           this.user = null
-          return ''
+          this.username = ''
+          return
         }
         this.user = user;
         this.authService.setuser(user)
-        return `${user.name} ${user.surname}`
+        this.username = `${user.name} ${user.surname}`
       })
-    );
+    })
   }
 }

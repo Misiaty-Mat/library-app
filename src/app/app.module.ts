@@ -22,9 +22,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BooksComponent } from './books/books.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RegisterComponent } from './register/register.component';
+import { UsersComponent } from './users/users.component';
+import { LoansComponent } from './loans/loans.component';
+import { AllLoansComponent } from './all-loans/all-loans.component';
+import { AddBookComponent } from './add-book/add-book.component';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
-  declarations: [AppComponent, NavComponent, LoginComponent, BooksComponent, RegisterComponent],
+  declarations: [AppComponent, NavComponent, LoginComponent, BooksComponent, RegisterComponent, UsersComponent, LoansComponent, AllLoansComponent, AddBookComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -39,6 +44,7 @@ import { RegisterComponent } from './register/register.component';
     MatButtonModule,
     MatSnackBarModule,
     MatTooltipModule,
+    MatSelectModule,
     ReactiveFormsModule,
     NgbModule,
   ],

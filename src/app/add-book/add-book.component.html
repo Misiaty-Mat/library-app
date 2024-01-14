@@ -1,0 +1,55 @@
+<form [formGroup]="form" class="book-form">
+  <div>
+    <mat-form-field class="form-field">
+      <mat-label>Book name</mat-label>
+      <input matInput appEmailvalidator #input name="name" formControlName="name">
+      <mat-error *ngIf="form.get('name')?.hasError('required')">
+        This field is required
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field class="form-field">
+      <mat-label>Author</mat-label>
+      <input matInput appEmailvalidator #input name="author" formControlName="author">
+      <mat-error *ngIf="form.get('author')?.hasError('required')">
+        This field is required
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field class="form-field">
+      <mat-label>Category</mat-label>
+      <input matInput appEmailvalidator #input name="category" formControlName="category">
+      <mat-error *ngIf="form.get('category')?.hasError('required')">
+        This field is required
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field class="form-field">
+      <mat-label>Tag</mat-label>
+      <input matInput appEmailvalidator #input name="tag" formControlName="tag">
+      <mat-error *ngIf="form.get('tag')?.hasError('required')">
+        This field is required
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field class="form-field">
+      <mat-label>ISBN Number</mat-label>
+      <input matInput appEmailvalidator #input name="isbn" formControlName="isbn">
+      <mat-error *ngIf="form.get('isbn')?.hasError('required')">
+        This field is required
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="form-buttons" matTooltip="{{form.valid ? '' : 'Fill the form above with valid data'}}">
+    <button mat-raised-button color="primary" [disabled]="form.invalid" (click)="add()">Add book</button>
+  </div>
+</form>
